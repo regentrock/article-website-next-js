@@ -1,0 +1,160 @@
+.header {
+  background-color: #f4f1e3;
+  color: #1a1a1a;
+  width: 100%;
+  padding: 0.8rem 1rem; /* Reduzido padding lateral no mobile */
+  border-bottom: 2px solid #d1cbb8;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative; /* Adicionado para posicionamento absoluto do menu */
+}
+
+/* ========= LOGO ========= */
+.logo {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 1.75rem; /* Reduzido para mobile */
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  border-bottom: 3px double #1a1a1a;
+  padding-bottom: 5px;
+}
+
+/* ========= NAVIGATION ========= */
+.nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.link {
+  font-family: "Georgia", serif;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #1a1a1a;
+  border-bottom: 1px solid transparent;
+  transition: 0.2s ease-in-out;
+  padding: 0.5rem 0; /* Adicionado padding para melhor touch */
+}
+
+.link:hover {
+  border-bottom: 1px solid #1a1a1a;
+}
+
+/* ========= HAMBURGER MENU ========= */
+.menuToggle {
+  display: none;
+}
+
+.menuButton {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 28px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 1000; /* Garantir que fique acima de outros elementos */
+}
+
+.bar {
+  height: 3px;
+  width: 100%;
+  background-color: #1a1a1a;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* ========= MOBILE ========= */
+@media (max-width: 768px) {
+  .header {
+    padding: 0.6rem 1rem; /* Padding ainda menor em mobile */
+  }
+  
+  .logo {
+    font-size: 1.5rem; /* Logo menor em mobile */
+  }
+
+  .nav {
+    position: fixed; /* Alterado para fixed para cobrir toda a tela */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Ocupa toda a altura da tela */
+    flex-direction: column;
+    background-color: #f4f1e3;
+    gap: 0;
+    padding: 5rem 2rem 2rem; /* Espaço para o topo */
+    transform: translateX(-100%); /* Esconde para a esquerda */
+    transition: transform 0.3s ease-in-out;
+    border-bottom: none;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .link {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #e8e6e1;
+    transition: all 0.3s ease;
+  }
+
+  .link:hover {
+    background-color: #e8e6e1;
+    border-bottom: 1px solid #e8e6e1;
+  }
+
+  .menuButton {
+    display: flex;
+  }
+
+  .menuToggle:checked ~ .nav {
+    transform: translateX(0); /* Mostra o menu */
+  }
+
+  /* Animação do ícone melhorada */
+  .menuToggle:checked + .menuButton .bar:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+  .menuToggle:checked + .menuButton .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menuToggle:checked + .menuButton .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+  
+  /* Previne scroll quando menu está aberto */
+  body:has(.menuToggle:checked) {
+    overflow: hidden;
+  }
+}
+
+/* ========= MOBILE PEQUENO ========= */
+@media (max-width: 480px) {
+  .header {
+    padding: 0.5rem 0.8rem;
+  }
+  
+  .logo {
+    font-size: 1.3rem;
+  }
+  
+  .nav {
+    padding: 4rem 1rem 2rem;
+  }
+  
+  .link {
+    font-size: 1rem;
+    padding: 0.8rem 0;
+  }
+}
