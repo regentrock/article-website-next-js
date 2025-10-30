@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { articles } from "@/lib/articles";
-import styles from "./articlePage.module.css";
+import styles from "./ArticlePage.module.css";
 
 interface ArticlePageProps {
   params: {
