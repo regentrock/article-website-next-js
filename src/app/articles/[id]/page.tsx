@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { articles } from "@/lib/articles"; // Esta importação está correta
+import { articles } from "@/lib/articles";
 import styles from "./ArticlePage.module.css";
 
 export default async function ArticlePage({ 
@@ -10,13 +10,8 @@ export default async function ArticlePage({
 }) {
   const { id } = await params;
   
-  // Validação robusta do ID
-  if (!id || typeof id !== 'string' || id.trim() === '' || isNaN(parseInt(id, 10))) {
-    notFound();
-  }
-
-  // Converter para número e buscar o artigo
-  const articleId = parseInt(id, 10);
+  // Conversão direta sem validações complexas
+  const articleId = parseInt(id);
   const article = articles.find(art => art.id === articleId);
 
   if (!article) {
@@ -258,21 +253,12 @@ export default async function ArticlePage({
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  
-  // Validação do ID
-  if (!id || typeof id !== 'string' || id.trim() === '' || isNaN(parseInt(id, 10))) {
-    return {
-      title: 'Artigo Não Encontrado - NewsPress',
-      description: 'Artigo não encontrado'
-    };
-  }
-
-  const articleId = parseInt(id, 10);
+  const articleId = parseInt(id);
   const article = articles.find(art => art.id === articleId);
 
   if (!article) {
     return {
-      title: 'Artigo Não Encontrado - NewsPress',
+      title: 'Artigo - NewsPress',
       description: 'Artigo não encontrado'
     };
   }
