@@ -2,8 +2,8 @@ import Card from "./components/card/card";
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "CineVerso | Filmes em Alta",
-  description: "Descubra os filmes que estão bombando no momento — direto do CineVerso.",
+  title: "NewsPress | Notícias em Alta",
+  description: "Descubra o que está acontecendo ao redor do mundo com nossas notícias.",
 };
 
 

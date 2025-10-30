@@ -9,8 +9,11 @@ interface ArticlePageProps {
   };
 }
 
-export default function ArticlePage({ params }: ArticlePageProps) {
-  const article = articles.find(art => art.id.toString() === params.id);
+// Adicione async à função principal
+export default async function ArticlePage({ params }: ArticlePageProps) {
+  // Aguarde os params se necessário e extraia o id
+  const { id } = await params;
+  const article = articles.find(art => art.id.toString() === id);
 
   if (!article) {
     notFound();
@@ -184,33 +187,30 @@ export default function ArticlePage({ params }: ArticlePageProps) {
                 Voltar para Artigos
               </Link>
               <div className={styles.shareSection}>
-  <span>Compartilhar:</span>
-
-  <button className={styles.shareButton} title="Compartilhar no X (Twitter)">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-    >
-      <path d="M18.244 2H21.5l-7.51 8.57L22 22h-6.5l-5.18-6.69L4.5 22H1.243l8.012-9.15L2 2h6.65l4.69 6.21L18.244 2zM17 20l-10-13h2.5l10 13H17z" />
-    </svg>
-  </button>
-
-  <button className={styles.shareButton} title="Copiar link">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-    >
-      <path d="M3.9 12a5 5 0 0 1 5-5h3v2h-3a3 3 0 1 0 0 6h3v2h-3a5 5 0 0 1-5-5zm7-3h3a5 5 0 0 1 0 10h-3v-2h3a3 3 0 0 0 0-6h-3V9z" />
-    </svg>
-  </button>
-</div>
-
+                <span>Compartilhar:</span>
+                <button className={styles.shareButton} title="Compartilhar no X (Twitter)">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M18.244 2H21.5l-7.51 8.57L22 22h-6.5l-5.18-6.69L4.5 22H1.243l8.012-9.15L2 2h6.65l4.69 6.21L18.244 2zM17 20l-10-13h2.5l10 13H17z" />
+                  </svg>
+                </button>
+                <button className={styles.shareButton} title="Copiar link">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M3.9 12a5 5 0 0 1 5-5h3v2h-3a3 3 0 1 0 0 6h3v2h-3a5 5 0 0 1-5-5zm7-3h3a5 5 0 0 1 0 10h-3v-2h3a3 3 0 0 0 0-6h-3V9z" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </footer>
         </div>
@@ -252,8 +252,10 @@ export default function ArticlePage({ params }: ArticlePageProps) {
   );
 }
 
-export async function generateMetadata({ params }: ArticlePageProps) {
-  const article = articles.find(art => art.id.toString() === params.id);
+// Atualize a generateMetadata para ser async e lidar com params como Promise
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const article = articles.find(art => art.id.toString() === id);
 
   return {
     title: `${article?.title} - NewsPress`,
