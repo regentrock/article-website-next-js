@@ -3,15 +3,15 @@ import { notFound } from "next/navigation";
 import { articles } from "@/lib/articles";
 import styles from "./ArticlePage.module.css";
 
+// Interface correta para Next.js 15
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-// Adicione async à função principal
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  // Aguarde os params se necessário e extraia o id
+  // Desestruturar a Promise corretamente
   const { id } = await params;
   const article = articles.find(art => art.id.toString() === id);
 
@@ -252,7 +252,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   );
 }
 
-// Atualize a generateMetadata para ser async e lidar com params como Promise
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const article = articles.find(art => art.id.toString() === id);
