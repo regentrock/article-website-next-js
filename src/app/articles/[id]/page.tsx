@@ -1,19 +1,23 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { articles } from "@/lib/articles";
+import { articles } from "@/lib/articles"; // Esta importação está correta
 import styles from "./ArticlePage.module.css";
 
-// Interface correta para Next.js 15
-interface ArticlePageProps {
-  params: Promise<{
-    id: string;
-  }>;
-}
-
-export default async function ArticlePage({ params }: ArticlePageProps) {
-  // Desestruturar a Promise corretamente
+export default async function ArticlePage({ 
+  params 
+}: { 
+  params: Promise<{ id: string }> 
+}) {
   const { id } = await params;
-  const article = articles.find(art => art.id.toString() === id);
+  
+  // Validação robusta do ID
+  if (!id || typeof id !== 'string' || id.trim() === '' || isNaN(parseInt(id, 10))) {
+    notFound();
+  }
+
+  // Converter para número e buscar o artigo
+  const articleId = parseInt(id, 10);
+  const article = articles.find(art => art.id === articleId);
 
   if (!article) {
     notFound();
@@ -254,11 +258,28 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const article = articles.find(art => art.id.toString() === id);
+  
+  // Validação do ID
+  if (!id || typeof id !== 'string' || id.trim() === '' || isNaN(parseInt(id, 10))) {
+    return {
+      title: 'Artigo Não Encontrado - NewsPress',
+      description: 'Artigo não encontrado'
+    };
+  }
+
+  const articleId = parseInt(id, 10);
+  const article = articles.find(art => art.id === articleId);
+
+  if (!article) {
+    return {
+      title: 'Artigo Não Encontrado - NewsPress',
+      description: 'Artigo não encontrado'
+    };
+  }
 
   return {
-    title: `${article?.title} - NewsPress`,
-    description: article?.description,
+    title: `${article.title} - NewsPress`,
+    description: article.description,
   };
 }
 
